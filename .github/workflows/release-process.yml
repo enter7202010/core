@@ -39,14 +39,14 @@ jobs:
           dotcicd/library/checkProvider.sh github
           pwd
           ls -las
-#      - name: Build-Deploy DotCMS Enterprise
-#        uses: dotcms/generate-ee-jar@main
-#        with:
-#          repo-username: ${{ secrets.REPO_USERNAME }}
-#          repo-password: ${{ secrets.REPO_PASSWORD }}
-#          build-id: ${{ env.branch }}
-#          core-build-id: ${{ env.coreBranch }}
-#          rsa-key: ${{ secrets.DOTCMS_BUILD_RSA_KEY }}
-#          create-distro-file: true
-#      - name: Build Distro files
-#        run: |
+      - name: Build-Deploy DotCMS Enterprise
+        uses: dotcms/generate-ee-jar@main
+        with:
+          repo-username: ${{ secrets.REPO_USERNAME }}
+          repo-password: ${{ secrets.REPO_PASSWORD }}
+          build-id: ${{ env.branch }}
+          core-build-id: ${{ env.coreBranch }}
+          rsa-key: ${{ secrets.DOTCMS_BUILD_RSA_KEY }}
+          create-distro-file: true
+      - name: Build Distro files
+        run: |
