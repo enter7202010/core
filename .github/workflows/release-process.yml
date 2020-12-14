@@ -48,3 +48,4 @@ jobs:
           core-build-id: ${{ env.coreBranch }}
           rsa-key: ${{ secrets.DOTCMS_BUILD_RSA_KEY }}
           create-distro-file: true
+          
