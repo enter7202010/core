@@ -18,6 +18,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 1
+      - name:
       - name: GITHUB CONTEXT
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
@@ -28,22 +29,26 @@ jobs:
         if: github.event_name == 'pull_request'
       - name: Set Common Vars
         run: |
-          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
-            CURRENT_BRANCH="${{ github.head_ref }}"
-            COMMIT_MESSG="${{ steps.get-latest-commit.outputs.latest_commit_message }}"
-          else
-            CURRENT_BRANCH=$(basename "${{ github.ref }}")
-            COMMIT_MESSG=$(git log --format=%s -n 1 ${{ github.event.after }})
-          fi
-
-          echo "COMMIT_MESSG: ${COMMIT_MESSG}"
-          echo "CURRENT_BRANCH=${CURRENT_BRANCH}" >> $GITHUB_ENV
+          BRANCH=$(basename "${{ github.ref }}")
+          echo "branch=${BRANCH}" >> $GITHUB_ENV
+          echo "coreBranch=${BRANCH}" >> $GITHUB_ENV
       - name: Prepare dot-cicd
         run: |
           chmod +x .cicd/discover.sh && .cicd/discover.sh
       - name: Check Provider
         run: |
           dotcicd/library/checkProvider.sh github
-      - name: Generate EE jar
-        run: |
-          dotcicd/library/pipeline.sh generateEeJar
+          pwd
+          ls -las
+#      - name: Build-Deploy DotCMS Enterprise
+#        uses: dotcms/generate-ee-jar@main
+#        with:
+#          repo-username: ${{ secrets.REPO_USERNAME }}
+#          repo-password: ${{ secrets.REPO_PASSWORD }}
+#          build-id: ${{ env.branch }}
+#          core-build-id: ${{ env.coreBranch }}
+#          rsa-key: ${{ secrets.DOTCMS_BUILD_RSA_KEY }}
+#          create-distro-file: true
+#      - name: Build Distro files
+#        run: |
+
